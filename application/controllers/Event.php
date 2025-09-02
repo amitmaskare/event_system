@@ -19,7 +19,8 @@ class Event extends CI_Controller
 
 	public function add()
 	{
-		$this->load->view('event/add');
+		$data['getRole'] = $this->Commonmodel->getData('users', "id!='1'");
+		$this->load->view('event/add', $data);
 	}
 
 	public function saveEvent()
@@ -42,11 +43,55 @@ class Event extends CI_Controller
 		);
 		if (!empty($this->input->post('id'))) {
 
-			$this->Commonmodel->updateData('events', "id='" . $this->input->post('id') . "'", $data,);
+			$eventId = $this->input->post('id');
+			$this->Commonmodel->updateData('events', ['id' => $eventId], $data);
 			$msg = "updated";
+
+			// clear old child records
+			$this->Commonmodel->deleteData('quotas', ['event_id' => $eventId]);
+			$this->Commonmodel->deleteData('form_nodes', ['event_id' => $eventId]);
+			$this->Commonmodel->deleteData('approval_bands', ['event_id' => $eventId]);
 		} else {
 			$this->Commonmodel->insertData('events', $data);
+			$eventId = $this->db->insert_id();
 			$msg = "added";
+		}
+
+		if ($this->input->post('quota_role')) {
+			$count = count($this->input->post('quota_role'));
+			for ($i = 0; $i < $count; $i++) {
+				$dataQuota = array(
+					'event_id'        => $eventId,
+					'role'            => $this->input->post('quota_role')[$i],
+					'max_participants' => $this->input->post('max_participants')[$i],
+				);
+				$this->Commonmodel->insertData('quotas', $dataQuota);
+			}
+		}
+		if ($this->input->post('label')) {
+			$count1 = count($this->input->post('label'));
+			for ($i = 0; $i < $count1; $i++) {
+				$dataForm = array(
+					'event_id'      => $eventId,
+					'label'         => $this->input->post('label')[$i],
+					'field_name'    => $this->input->post('field_name')[$i],
+					'field_type'    => $this->input->post('field_type')[$i],
+					'field_options' => $this->input->post('field_options')[$i],
+					'required'      => $this->input->post('required')[$i],
+				);
+				$this->Commonmodel->insertData('form_nodes', $dataForm);
+			}
+		}
+		if ($this->input->post('band_role')) {
+			$count2 = count($this->input->post('band_role'));
+			for ($i = 0; $i < $count2; $i++) {
+				$dataBand = array(
+					'event_id'   => $eventId,
+					'band_order' => $this->input->post('band_order')[$i],
+					'role'       => $this->input->post('band_role')[$i],
+				);
+				$this->Commonmodel->insertData('approval_bands', $dataBand);
+			}
 		}
 		$this->session->set_flashdata('success', "Event {$msg} successfully");
 		redirect(base_url('event'));
@@ -55,6 +100,7 @@ class Event extends CI_Controller
 	public function edit($id)
 	{
 		$data['getData'] = $this->Commonmodel->getSingle('events', "id='" . $id . "'");
+		$data['getRole'] = $this->Commonmodel->getData('users', "id!='1'");
 		$this->load->view('event/add', $data);
 	}
 
