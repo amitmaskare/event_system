@@ -1,8 +1,8 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('layout/header'); ?>
 <div class="container mt-3">
 
 	<div class="row">
-		<h3>Welcome, <?= $_SESSION['event_system']['name'] ?></h3>
+		<h3>Welcome, <?= $this->session->userdata('name') ?></h3>
 	</div>
 </div>
 

@@ -1,4 +1,4 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('layout/header'); ?>
 <div class="container mt-3">
 
 	<div class="row">

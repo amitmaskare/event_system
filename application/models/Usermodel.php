@@ -9,4 +9,6 @@ class Usermodel extends CI_Model
 		$now = date('Y-m-d');
 		return $this->db->where('end_date >=', $now)->order_by('start_date', 'ASC')->get('events')->result();
 	}
+
+	
 }

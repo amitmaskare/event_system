@@ -1,4 +1,4 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('layout/header'); ?>
 <div class="container mt-3">
 
 	<div class="row">
@@ -15,8 +15,17 @@
 							value="<?= !empty(ucwords($getEvent->name)) ? $getEvent->name : '' ?>" autocomplete="off"
 							readonly>
 					</div>
+					<?php 
+					if(!empty($registration)): foreach($registration as $reg):
+						$required=$reg->required=='1'?'required':'';
+						?>
+					<div class="col-lg-12 col-sm-12 col-12">
+						<label class="mb-2"><?= ucwords($reg->label)?><span class="text-danger"><?= $reg->required=='1'?'*':'';?></span></label>
+						<input type="<?= $reg->field_type ?? ''?>" class="form-control mb-3" name="<?= $field_name ?? ''?>" autocomplete="off" <?= $required ?>>
+					</div>
+					<?php endforeach; endif;?>
 
-					<input type="hidden" name="id" value="<?= !empty($getEvent->id) ? $getEvent->id : '' ?>">
+					<input type="hidden" name="event_id" value="<?= !empty($getEvent->id) ? $getEvent->id : '' ?>">
 
 					<div class="col-lg-12 col-sm-12 col-12 w-50 mb-3 d-flex justify-content-start">
 						<button type="submit" class="btn btn-primary col-12 me-3">Submit</button>

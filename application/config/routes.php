@@ -65,7 +65,9 @@ $route['event/delete/(:num)'] = 'event/delete/$1';
 // user panel
 $route['upcoming-event'] = 'user/index';
 $route['event/registration/(:num)'] = 'user/registration/$1';
+$route['saveRegistration']='user/saveRegistration';
 
+// Approver 
 
-$route['quota'] = 'dashboard/quota';
-$route['approval'] = 'dashboard/approval';
+$route['']='';
+

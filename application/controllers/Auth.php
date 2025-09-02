@@ -33,20 +33,21 @@ class Auth extends CI_Controller
 				redirect(base_url(''));
 			}
 
-			$sess['event_system'] = array(
-				'userId' => $checkLogin->id,
-				'name' => $checkLogin->name,
-				'email' => $checkLogin->email,
-				'role' => $checkLogin->role,
+				$session_data = array(
+			'userId'   => $checkLogin->id,
+			'name'     => $checkLogin->name,
+			'email'    => $checkLogin->email,
+			'role'     => $checkLogin->role,
 			);
-			$this->session->set_userdata($sess);
+
+		$this->session->set_userdata($session_data);
 			redirect(base_url('dashboard'));
 		}
 	}
 
 	function logout()
 	{
-		unset($_SESSION['event_system']);
+		$this->session->sess_destroy();
 		$this->session->set_flashdata('success', "Logout successfully!");
 		redirect('');
 	}

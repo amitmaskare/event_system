@@ -1,5 +1,5 @@
 <?php
-if (empty($_SESSION['event_system']['userId'])) {
+if (empty($this->session->userdata('userId'))) {
 	redirect('');
 }
 
@@ -39,7 +39,7 @@ if (empty($_SESSION['event_system']['userId'])) {
 
 				</ul>
 				<form class="d-flex">
-					<h6 style="color:white;margin-right:10px;"><?= ucwords(@$_SESSION['event_system']['name']) ?></h6>
+					<h6 style="color:white;margin-right:10px;"><?= ucwords($this->session->userdata('name')) ?></h6>
 					<a class="btn btn-danger" href="<?= base_url('logout') ?>">LogOut</a>
 				</form>
 			</div>

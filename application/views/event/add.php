@@ -1,4 +1,4 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('layout/header'); ?>
 <div class="container mt-3">
 
     <div class="row">
@@ -51,8 +51,27 @@
                                     </tr>
                                 </thead>
                                 <tbody id="quotaTable">
+                                <?php if(!empty($quotalist)): foreach($quotalist as $index=>$quota):?>
+                                    <tr id="row<?= $index+1?>">
+                                        <td><select name="quota_role[]" class="form-control" required>
+                                                <option value="">Select</option>
+                                                <option value="employee" <?= $quota->role=='employee'?'selected':''?>>Employee</option>
+                                                <option value="manager" <?= $quota->role=='manager'?'selected':''?>>Manager</option>
+                                                <option value="director" <?= $quota->role=='director'?'selected':''?>>Director</option>
+                                                <option value="external" <?= $quota->role=='external'?'selected':''?>>External</option>
 
-                                    <tr id="row1">
+                                            </select></td>
+                                        <td><input type="text" class="form-control" name="max_participants[]" required value="<?= $quota->max_participants ?? ''?>">
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="appendCurrentCell(1);"
+                                                class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-danger"
+                                                onclick="deleteCurrentCell(1);" title="Delete Row"> Remove</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; else:?>
+                                         <tr id="row1">
                                         <td><select name="quota_role[]" class="form-control" required>
                                                 <option value="">Select</option>
                                                 <option value="employee">Employee</option>
@@ -70,6 +89,7 @@
                                                 onclick="deleteCurrentCell(1);" title="Delete Row"> Remove</a>
                                         </td>
                                     </tr>
+                                        <?php endif; ?>
 
                                 </tbody>
 
@@ -91,16 +111,45 @@
                                     </tr>
                                 </thead>
                                 <tbody id="formTable">
+                                    <?php if(!empty($formlist)): foreach($formlist as $index=>$row):?>
+                                    <tr id="formrow<?= $index+1?>">
+                                        <td><input type="text" class="form-control" name="label[]" required value="<?= $row->label ?? ''?>"></td>
+                                        <td><input type="text" class="form-control" name="field_name[]" required value="<?= $row->field_name ?? ''?>"></td>
+                                        <td>
+                                            <select name="field_type[]" class="form-control" required>
+                                                <option value="">Select</option>
+                                                <option value="text" <?= $row->field_type=='text'?'selected':''?>>Text</option>
+                                                <option value="email" <?= $row->field_type=='email'?'selected':''?>>Email</option>
+                                                <option value="number" <?= $row->field_type=='number'?'selected':''?>>Number</option>
+                                                <option value="dropdown" <?= $row->field_type=='dropdown'?'selected':''?>>Dropdown</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" name="field_options[]" value="<?= $row->field_options ?? ''?>">
+                                        </td>
+                                        <td>
+                                            <select name="required[]" class="form-control">
+                                                <option value="1" <?= $row->required=='1'?'selected':''?>>Yes</option>
+                                                <option value="0" <?= $row->required=='0'?'selected':''?>>No</option>
+                                            </select>
+                                        </td>
 
-                                    <tr id="formrow1">
-                                        <td><input type="text" class="form-control" name="label[]" required></td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="appendForm(1);"
+                                                class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-danger"
+                                                onclick="deleteForm(1);" title="Delete Row"> Remove</a>
+                                        </td>
+                                    </tr>
+                                    <?php  endforeach; else:?>
+                                         <tr id="formrow1">
+                                        <td><input type="text" class="form-control" name="label[]" required ></td>
                                         <td><input type="text" class="form-control" name="field_name[]" required></td>
                                         <td>
                                             <select name="field_type[]" class="form-control" required>
                                                 <option value="">Select</option>
-                                                <option value="text">Text</option>
-                                                <option value="email">Email</option>
-                                                <option value="number">Number</option>
+                                                <option value="text" >Text</option>
+                                                <option value="email" >Email</option>
+                                                <option value="number" >Number</option>
                                                 <option value="dropdown">Dropdown</option>
                                             </select>
                                         </td>
@@ -108,7 +157,7 @@
                                         </td>
                                         <td>
                                             <select name="required[]" class="form-control">
-                                                <option value="1">Yes</option>
+                                                <option value="1" >Yes</option>
                                                 <option value="0">No</option>
                                             </select>
                                         </td>
@@ -120,6 +169,7 @@
                                                 onclick="deleteForm(1);" title="Delete Row"> Remove</a>
                                         </td>
                                     </tr>
+                                        <?php endif;?>
 
                                 </tbody>
 
@@ -138,18 +188,16 @@
                                     </tr>
                                 </thead>
                                 <tbody id="bandTable">
+                                    <?php if(!empty($bandlist)): foreach($bandlist as $index=>$val):?>
+                                    <tr id="bandrow<?= $index+1?>">
 
-                                    <tr id="bandrow1">
-
-                                        <td><input type="text" class="form-control" name="band_order[]" required>
+                                        <td><input type="text" class="form-control" name="band_order[]" required value="<?= $val->band_order ?? ''?>">
                                         </td>
                                         <td><select name="band_role[]" class="form-control" required>
-                                                <option value="">Select</option>
-                                                <option value="employee">Employee</option>
-                                                <option value="manager">Manager</option>
-                                                <option value="director">Director</option>
-                                                <option value="external">External</option>
-
+                                                <option value="">Select</option>            
+                                                <option value="manager" <?= $val->role=='manager'?'selected':''?>>Manager</option>
+                                                <option value="director" <?= $val->role=='director'?'selected':''?>>Director</option>
+                                               
                                             </select></td>
                                         <td>
                                             <a href="javascript:void(0)" onclick="appendBand(1);"
@@ -158,6 +206,25 @@
                                                 onclick="deleteBand(1);" title="Delete Row"> Remove</a>
                                         </td>
                                     </tr>
+                                    <?php endforeach; else:?>
+                                        <tr id="bandrow1">
+
+                                        <td><input type="text" class="form-control" name="band_order[]" required>
+                                        </td>
+                                        <td><select name="band_role[]" class="form-control" required>
+                                                <option value="">Select</option>            
+                                                <option value="manager">Manager</option>
+                                                <option value="director">Director</option>
+                                               
+                                            </select></td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="appendBand(1);"
+                                                class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-danger"
+                                                onclick="deleteBand(1);" title="Delete Row"> Remove</a>
+                                        </td>
+                                    </tr>
+                                        <?php endif;?>
 
                                 </tbody>
 
@@ -279,14 +346,13 @@ function appendBand(rowId) {
     html += `<tr id="bandrow${lastRow}">
 					 <td><input type="text" class="form-control" name="band_order[]" required>
                                         </td>
-                                        <td><select name="band_role[]" class="form-control" required>
-                                                <option value="">Select</option>
-                                                <option value="employee">Employee</option>
+                                        <td>
+                                        <select name="band_role[]" class="form-control" required>
+                                                <option value="">Select</option>  
                                                 <option value="manager">Manager</option>
-                                                <option value="director">Director</option>
-                                                <option value="external">External</option>
-
-                                            </select></td>
+                                                <option value="director">Director</option>         
+                                            </select>
+                                            </td>
                     <td>
                       <a href="javascript:void(0);" class="btn btn-sm btn-info mr-2" onclick="appendBand(${lastRow});">Add</a>
                       <a href="javascript:void(0);" onclick="deleteBand(${lastRow});" class="btn btn-sm btn-danger"> Remove</a>

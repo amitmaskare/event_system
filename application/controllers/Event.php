@@ -19,8 +19,8 @@ class Event extends CI_Controller
 
 	public function add()
 	{
-		$data['getRole'] = $this->Commonmodel->getData('users', "id!='1'");
-		$this->load->view('event/add', $data);
+
+		$this->load->view('event/add');
 	}
 
 	public function saveEvent()
@@ -74,7 +74,7 @@ class Event extends CI_Controller
 				$dataForm = array(
 					'event_id'      => $eventId,
 					'label'         => $this->input->post('label')[$i],
-					'field_name'    => $this->input->post('field_name')[$i],
+					'field_name'    => strtolower($this->input->post('field_name'))[$i],
 					'field_type'    => $this->input->post('field_type')[$i],
 					'field_options' => $this->input->post('field_options')[$i],
 					'required'      => $this->input->post('required')[$i],
@@ -100,7 +100,10 @@ class Event extends CI_Controller
 	public function edit($id)
 	{
 		$data['getData'] = $this->Commonmodel->getSingle('events', "id='" . $id . "'");
-		$data['getRole'] = $this->Commonmodel->getData('users', "id!='1'");
+		$data['quotalist'] = $this->Commonmodel->getData('quotas', "event_id ='" . $id . "'");
+		$data['formlist'] = $this->Commonmodel->getData('form_nodes', "event_id ='" . $id . "'");
+		$data['bandlist'] = $this->Commonmodel->getData('approval_bands', "event_id ='" . $id . "'");
+
 		$this->load->view('event/add', $data);
 	}
 
