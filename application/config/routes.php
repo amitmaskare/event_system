@@ -69,5 +69,5 @@ $route['saveRegistration']='user/saveRegistration';
 
 // Approver 
 
-$route['']='';
+$route['registration-list']='dashboard/registration_list';
 

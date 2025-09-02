@@ -16,8 +16,9 @@ class Dashboard extends CI_Controller
 
 	public function registration_list()
 	{
-
-		$this->load->view('approver/registration_list');
+		$cond="band.role='".$this->session->userdata('role')."'";	
+		$data['approver']=$this->Approvermodel->registration_list($cond);
+		$this->load->view('approver/registration_list',$data);
 	}
 
 

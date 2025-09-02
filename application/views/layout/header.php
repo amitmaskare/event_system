@@ -34,7 +34,7 @@ if (empty($this->session->userdata('userId'))) {
 						<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Approver</a>
+						<a class="nav-link" href="<?= base_url('registration-list') ?>">Approver</a>
 					</li>
 
 				</ul>
