@@ -49,12 +49,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'user';
+$route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['actionLogin'] = 'auth/actionLogin';
 $route['logout'] = 'auth/logout';
-$route['event'] = 'dashboard/event';
+
+$route['event-list'] = 'event/index';
+$route['event/add'] = 'event/add';
+$route['event/edit/(:num)'] = 'event/edit/$1';
+$route['saveEvent'] = 'event/saveEvent';
+$route['event/delete/(:num)'] = 'event/delete/$1';
+
+// user panel
+$route['upcoming-event'] = 'user/index';
+$route['event/registration/(:num)'] = 'user/registration/$1';
+
+
 $route['quota'] = 'dashboard/quota';
 $route['approval'] = 'dashboard/approval';

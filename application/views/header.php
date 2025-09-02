@@ -27,13 +27,16 @@ if (empty($_SESSION['event_system']['userId'])) {
 						<a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url('event') ?>">Event</a>
+						<a class="nav-link" href="<?= base_url('event-list') ?>">Event</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('quota') ?>">Participant Quotas</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('approval') ?>">Set Approval</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
 					</li>
 
 				</ul>
