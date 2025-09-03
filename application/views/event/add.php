@@ -222,7 +222,7 @@
 												<td><input type="text" class="form-control" name="band_order[]" required
 														value="<?= $val->band_order ?? '' ?>">
 												</td>
-												<td><select name="band_role[]" class="form-control" required>
+												<td><select name="band_role[]" class="form-control " required>
 														<option value="">Select</option>
 														<option value="manager"
 															<?= $val->role == 'manager' ? 'selected' : '' ?>>
@@ -243,7 +243,7 @@
 									else: ?>
 										<tr id="bandrow1">
 
-											<td><input type="text" class="form-control" name="band_order[]" required>
+											<td><input type="text" class="form-control " name="band_order[]" required>
 											</td>
 											<td><select name="band_role[]" class="form-control" required>
 													<option value="">Select</option>
@@ -290,3 +290,4 @@
 </div>
 
 <script src="<?= base_url('assets/event.js') ?>"></script>
+
