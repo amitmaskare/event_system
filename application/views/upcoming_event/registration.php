@@ -83,7 +83,7 @@
 		});
 
 		if (!valid) {
-			alert("Please fill all required fields correctly.");
+			alert("Please fill all required fields correctly."); 
 			if (firstError) firstError.focus();
 		}
 
