@@ -27,6 +27,30 @@ class Dashboard extends CI_Controller
 		$registrationId = $this->input->post('registration_id');
 		$bandId         = $this->input->post('band_id');
 		$decision       = $this->input->post('decision');
+		$registration = $this->Commonmodel->getSingle('registrations', array('id' => $registrationId));
+		$eventId      = $registration->event_id;
+		$this->db->order_by('band_order', 'ASC');
+		$bands = $this->Commonmodel->getData('approval_bands', array('event_id' => $eventId));
+		$currentIndex = null;
+		foreach ($bands as $index => $b) {
+			if ($b->id == $bandId) {
+				$currentIndex = $index;
+				break;
+			}
+		}
+		if ($currentIndex !== null && $currentIndex > 0) {
+			for ($i = 0; $i < $currentIndex; $i++) {
+				$prevApproval = $this->Commonmodel->getSingle('approvals', array(
+					'registration_id' => $registrationId,
+					'band_id'         => $bands[$i]->id
+				));
+				if (!$prevApproval || $prevApproval->decision != 'approved') {
+					$this->session->set_flashdata('error', "first need to accept {$bands[$i]->role}.");
+					redirect(base_url('registration-list'));
+					return;
+				}
+			}
+		}
 		$data = array(
 			'registration_id' => $registrationId,
 			'approved_by'     => $this->session->userdata('userId'),
@@ -35,10 +59,6 @@ class Dashboard extends CI_Controller
 			'remarks'         => $this->input->post('remarks'),
 		);
 		$this->Commonmodel->insertData('approvals', $data);
-		$registration = $this->Commonmodel->getSingle('registrations', array('id' => $registrationId));
-		$eventId      = $registration->event_id;
-		$this->db->order_by('band_order', 'ASC');
-		$bands = $this->Commonmodel->getData('approval_bands', array('event_id' => $eventId));
 		$allApproved   = true;
 		$currentStatus = 'approved';
 
@@ -63,15 +83,18 @@ class Dashboard extends CI_Controller
 				break;
 			}
 		}
+
 		if ($allApproved) {
 			$updateStatus = array('status' => 'approved');
 		} else {
 			$updateStatus = array('status' => $currentStatus);
 		}
 		$this->Commonmodel->updateData('registrations', array('id' => $registrationId), $updateStatus);
+
 		$this->session->set_flashdata('success', "Approval successfully");
 		redirect(base_url('registration-list'));
 	}
+
 
 	public function set_approval_band()
 	{

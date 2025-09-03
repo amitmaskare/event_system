@@ -50,14 +50,15 @@ class User extends CI_Controller
 			$this->session->set_flashdata('error', "You are already registered for this event.");
 			return redirect('upcoming-event');
 		}
-		$this->db->select('COUNT(r.id) as total');
-		$this->db->from('registrations r');
-		$this->db->join('users u', 'u.id = r.user_id');
-		$this->db->where('r.event_id', $event_id);
-		$this->db->where('u.role', $role);
-		$count = $this->db->get()->row()->total;
+		$count=$this->Usermodel->get_count($event_id, $role);
 		if ($count >= $quota->max_participants) {
-			$this->session->set_flashdata('error', "Sorry, quota full for your role.");
+			$data = [
+				'event_id'      => $event_id,
+				'user_id'       => $user_id,
+				'status'		=>'waitlisted'
+			];
+			$this->Commonmodel->insertData('registrations', $data);
+			$this->session->set_flashdata('success', "Sorry, quota is waitlisted.");
 		} else {
 			$data = [
 				'event_id'      => $event_id,

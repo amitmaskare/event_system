@@ -17,5 +17,15 @@ class Usermodel extends CI_Model
 		return $query->result();
 	}
 
+	public function get_count($event_id, $role){
+		$this->db->select('COUNT(r.id) as total');
+		$this->db->from('registrations as r');
+		$this->db->join('users as u', 'u.id = r.user_id');
+		$this->db->where('r.event_id', $event_id);
+		$this->db->where('u.role', $role);
+		$query = $this->db->get();
+		return $query->row()->total;
+	}
+
 	
 }
