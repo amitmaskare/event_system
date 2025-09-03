@@ -72,14 +72,6 @@
 				$field.removeClass("is-invalid");
 			}
 
-			if ($field.attr("type") === "email" && value !== "") {
-				let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				if (!emailPattern.test(value)) {
-					valid = false;
-					$field.addClass("is-invalid");
-					if (!firstError) firstError = $field;
-				}
-			}
 		});
 
 		if (!valid) {
@@ -87,7 +79,7 @@
 			if (firstError) firstError.focus();
 		}
 
-		return valid; // important for onsubmit
+		return valid; 
 	}
 </script>
 
