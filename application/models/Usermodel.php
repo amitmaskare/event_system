@@ -4,10 +4,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Usermodel extends CI_Model
 {
 
-	public function upcoming_list()
+	public function upcoming_list($role)
 	{
 		$now = date('Y-m-d');
-		return $this->db->where('end_date >=', $now)->order_by('start_date', 'ASC')->get('events')->result();
+		$this->db->select('events.*');
+		$this->db->from('events');
+		$this->db->join('quotas', 'quotas.event_id = events.id', 'inner');
+		$this->db->where('quotas.role', $role);
+		$this->db->where('events.end_date >=', $now);
+		$this->db->order_by('events.start_date', 'ASC');
+		$query = $this->db->get();
+		return $query->result();
 	}
 
 	

@@ -12,7 +12,8 @@ class User extends CI_Controller
 
 	function index()
 	{
-		$data['upcomingEvent'] = $this->Usermodel->upcoming_list();
+		$role=$this->session->userdata('role');
+		$data['upcomingEvent'] = $this->Usermodel->upcoming_list($role);
 		$this->load->view('upcoming_event/event_list', $data);
 	}
 
