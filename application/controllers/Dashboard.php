@@ -24,19 +24,51 @@ class Dashboard extends CI_Controller
 
 	public function approval()
 	{
-
+		$registrationId = $this->input->post('registration_id');
+		$bandId         = $this->input->post('band_id');
+		$decision       = $this->input->post('decision');
 		$data = array(
-			'registration_id' => $this->input->post('registration_id'),
-			'approved_by' => $this->session->userdata('userId'),
-			'band_id' => $this->input->post('band_id'),
-			'decision' => $this->input->post('decision'),
-			'remarks' => $this->input->post('remarks'),
+			'registration_id' => $registrationId,
+			'approved_by'     => $this->session->userdata('userId'),
+			'band_id'         => $bandId,
+			'decision'        => $decision,
+			'remarks'         => $this->input->post('remarks'),
 		);
 		$this->Commonmodel->insertData('approvals', $data);
-		$updateStatus = array(
-			'status' => $this->input->post('decision'),
-		);
-		$this->Commonmodel->updateData('registrations', "id='" . $this->input->post('registration_id') . "'", $updateStatus);
+		$registration = $this->Commonmodel->getSingle('registrations', array('id' => $registrationId));
+		$eventId      = $registration->event_id;
+		$this->db->order_by('band_order', 'ASC');
+		$bands = $this->Commonmodel->getData('approval_bands', array('event_id' => $eventId));
+		$allApproved   = true;
+		$currentStatus = 'approved';
+
+		foreach ($bands as $b) {
+			$approval = $this->Commonmodel->getSingle('approvals', array(
+				'registration_id' => $registrationId,
+				'band_id'         => $b->id
+			));
+			if ($approval) {
+				if ($approval->decision == 'rejected') {
+					$currentStatus = 'rejected';
+					$allApproved   = false;
+					break;
+				} elseif ($approval->decision != 'approved') {
+					$allApproved   = false;
+					$currentStatus = 'pending';
+					break;
+				}
+			} else {
+				$allApproved   = false;
+				$currentStatus = 'pending';
+				break;
+			}
+		}
+		if ($allApproved) {
+			$updateStatus = array('status' => 'approved');
+		} else {
+			$updateStatus = array('status' => $currentStatus);
+		}
+		$this->Commonmodel->updateData('registrations', array('id' => $registrationId), $updateStatus);
 		$this->session->set_flashdata('success', "Approval successfully");
 		redirect(base_url('registration-list'));
 	}
