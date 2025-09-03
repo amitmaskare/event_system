@@ -5,7 +5,7 @@
 
 		<div class="container py-3  d-flex align-items-center justify-content-center ">
 			<form action="<?= base_url('saveRegistration') ?>" class=" col-lg-6 col-sm-6 col-12" method="POST"
-				id="dynamicForm" enctype="multipart/form-data" autocomplete="off">
+				id="dynamicForm" enctype="multipart/form-data" autocomplete="off" onsubmit="return validation()">
 				<div class="row  shadow-lg p-3 mb-5 bg-body rounded ">
 					<h2 class="text-center">Event Registration</h2>
 
@@ -34,8 +34,8 @@
 										endif; ?>
 									</select>
 								<?php else: ?>
-									<input type="<?= $reg->field_type ?? '' ?>" class="form-control mb-3" id="<?= $field_name ?>"
-										name="<?= $field_name ?>" autocomplete="off" <?= $required ?>>
+									<input type="<?= $reg->field_type ?? 'text' ?>" class="form-control mb-3"
+										id="<?= $field_name ?>" name="<?= $field_name ?>" autocomplete="off" <?= $required ?>>
 								<?php endif; ?>
 							</div>
 					<?php endforeach;
@@ -44,23 +44,60 @@
 					<input type="hidden" name="event_id" value="<?= !empty($getEvent->id) ? $getEvent->id : '' ?>">
 
 					<div class="col-lg-12 col-sm-12 col-12 w-50 mb-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-primary col-12 me-3">Submit</button>
+						<button type="submit" class="btn btn-primary col-12 me-3" onclick="return validation()">Submit</button>
 						<a href="<?= base_url('upcoming-event') ?>" class="btn btn-secondary col-12">Cancel</a>
 					</div>
 
 				</div>
 			</form>
 		</div>
-
-
-		<style>
-			.btnLogIn {
-				text-decoration: none;
-				font-weight: 700;
-
-			}
-		</style>
-
-
 	</div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+	function validation() {
+		let valid = true;
+		let firstError = null;
+
+		// Loop through inputs and selects inside the form
+		$("#dynamicForm").find("input, select").each(function() {
+			let $field = $(this);
+			let value = $.trim($field.val());
+
+			// Check required
+			if ($field.prop("required") && value === "") {
+				valid = false;
+				$field.addClass("is-invalid");
+				if (!firstError) firstError = $field;
+			} else {
+				$field.removeClass("is-invalid");
+			}
+
+			// Email check
+			if ($field.attr("type") === "email" && value !== "") {
+				let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				if (!emailPattern.test(value)) {
+					valid = false;
+					$field.addClass("is-invalid");
+					if (!firstError) firstError = $field;
+				}
+			}
+		});
+
+		if (!valid) {
+			alert("Please fill all required fields correctly.");
+			if (firstError) firstError.focus();
+		}
+
+		return valid; // important for onsubmit
+	}
+</script>
+
+
+<style>
+	.is-invalid {
+		border: 2px solid red;
+	}
+</style>

@@ -78,7 +78,10 @@ function deleteForm(rowId) {
 function appendBand(rowId) {
 	var checkLength = $("#bandTable tr").length;
 	var lastRow = checkLength + 1;
-
+	if (lastRow > 2) {
+		alert("You can only generate a maximum of 2 rows");
+		return false;
+	}
 	$("#deleteLastband").prop("disabled", false);
 	var html = "";
 	html += `<tr id="bandrow${lastRow}">

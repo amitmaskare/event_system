@@ -1,71 +1,66 @@
 ###################
-What is CodeIgniter
+Dynamic Event Registration & Approval System with Quotas
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+A clear and compact explanation of how quotas, approval bands, dynamic forms and login work in the delivered CodeIgniter 3 project.
 
 *******************
-Release Information
+Login
 *******************
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+This demo uses seeded users with email and password login  to keep the example minimal and focused.
+admin login
+user: admin@example.com
+pass : 123456  
+
+employee login 
+user : emp1@example.com
+pass : 123456
+
+manager login
+user : manager@example.com
+pass : 123456
+
+Director login
+user : director@example.com
+pass : 123456
 
 **************************
-Changelog and New Features
+After login
 **************************
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
-
-*******************
-Server Requirements
-*******************
-
-PHP version 5.6 or newer is recommended.
-
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+Admin users see an Event link,set up approvals link in the nav.(manage event, add, update , delete)
+Manager/Director see an Approver link.(approved, rejected)
+Employee/Manager/Director/External see an upcoming event.(uplcoming list event wise , form fill registration)
 
 ************
-Installation
+Dynamic forms
 ************
+event_id — links to events.id
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
+label — human label shown on form
 
-*******
-License
-*******
+field_name — name attribute for the HTML input (unique per event)
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+field_type — supported: text, email, number, dropdown
 
-*********
-Resources
-*********
+field_options — for dropdown only; comma-separated options (e.g. HR,Engineering,Sales)
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
+required — boolean: whether the field is mandatory
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+*******************
+Quota logic
+*******************
 
-***************
-Acknowledgement
-***************
+limit number of participants per event + registrant role (employee/manager/director/external).
+If approved_count >= max_participants
+status waitlist
+else
+status pending
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+************
+final approval
+************
+The system re-checks the quota (counts approved only — or approved+pending as implemented).
+band order wise approval or rejected
+
