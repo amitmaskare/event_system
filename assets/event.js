@@ -1,7 +1,10 @@
 function appendCurrentCell(rowId) {
 	var checkLength = $("#quotaTable tr").length;
 	var lastRow = checkLength + 1;
-
+	if (lastRow > 2) {
+		alert("You can only generate a maximum of 4 rows");
+		return false;
+	}
 	$("#deleteLast").prop("disabled", false);
 	var html = "";
 	html += `<tr id="row${lastRow}">

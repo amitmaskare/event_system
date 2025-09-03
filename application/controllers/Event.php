@@ -110,6 +110,9 @@ class Event extends CI_Controller
 	public function delete($id)
 	{
 		if (!empty($id)):
+			$this->Commonmodel->deleteData('quotas', "event_id='" . $id . "'");
+			$this->Commonmodel->deleteData('registrations', "event_id='" . $id . "'");
+			$this->Commonmodel->deleteData('approval_bands', "event_id='" . $id . "'");
 			$this->Commonmodel->deleteData('events', "id='" . $id . "'");
 			$this->session->set_flashdata('success', "Event deleted successfully");
 		else:
