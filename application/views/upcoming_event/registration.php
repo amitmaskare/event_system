@@ -5,7 +5,7 @@
 
 		<div class="container py-3  d-flex align-items-center justify-content-center ">
 			<form action="<?= base_url('saveRegistration') ?>" class=" col-lg-6 col-sm-6 col-12" method="POST"
-				enctype="multipart/form-data" autocomplete="off">
+				id="dynamicForm" enctype="multipart/form-data" autocomplete="off">
 				<div class="row  shadow-lg p-3 mb-5 bg-body rounded ">
 					<h2 class="text-center">Event Registration</h2>
 
@@ -15,15 +15,31 @@
 							value="<?= !empty(ucwords($getEvent->name)) ? $getEvent->name : '' ?>" autocomplete="off"
 							readonly>
 					</div>
-					<?php 
-					if(!empty($registration)): foreach($registration as $reg):
-						$required=$reg->required=='1'?'required':'';
-						?>
-					<div class="col-lg-12 col-sm-12 col-12">
-						<label class="mb-2"><?= ucwords($reg->label)?><span class="text-danger"><?= $reg->required=='1'?'*':'';?></span></label>
-						<input type="<?= $reg->field_type ?? ''?>" class="form-control mb-3" name="<?= $field_name ?? ''?>" autocomplete="off" <?= $required ?>>
-					</div>
-					<?php endforeach; endif;?>
+					<?php
+					if (!empty($registration)): foreach ($registration as $reg):
+							$required = $reg->required == '1' ? '' : '';
+							$option = explode(',', $reg->field_options);
+							$field_name = "field_" . $reg->id;
+					?>
+							<div class="col-lg-12 col-sm-12 col-12">
+								<label class="mb-2"><?= ucwords($reg->label) ?><span
+										class="text-danger"><?= $reg->required == '1' ? '*' : ''; ?></span></label>
+								<?php if ($reg->field_type == 'dropdown'): ?>
+									<select name="<?= $field_name ?? '' ?>" class="form-control mb-3" id="<?= $field_name ?>"
+										<?= $required ?>>
+										<option value="">Select</option>
+										<?php if (!empty($option)): foreach ($option as $key): ?>
+												<option value="<?= $key ?>"><?= ucwords($key) ?></option>
+										<?php endforeach;
+										endif; ?>
+									</select>
+								<?php else: ?>
+									<input type="<?= $reg->field_type ?? '' ?>" class="form-control mb-3" id="<?= $field_name ?>"
+										name="<?= $field_name ?>" autocomplete="off" <?= $required ?>>
+								<?php endif; ?>
+							</div>
+					<?php endforeach;
+					endif; ?>
 
 					<input type="hidden" name="event_id" value="<?= !empty($getEvent->id) ? $getEvent->id : '' ?>">
 

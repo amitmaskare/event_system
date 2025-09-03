@@ -26,20 +26,25 @@ if (empty($this->session->userdata('userId'))) {
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url('event-list') ?>">Event</a>
-					</li>
-
+					<?php if ($this->session->userdata('role') === 'admin'): ?>
+						<li class="nav-item">
+							<a class="nav-link" href="<?= base_url('event-list') ?>">Event</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?= base_url('set-approval-band') ?>">Set Approver Band</a>
+						</li>
+					<?php endif; ?>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
 					</li>
+
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('registration-list') ?>">Approver</a>
 					</li>
 
 				</ul>
 				<form class="d-flex">
-					<h6 style="color:white;margin-right:10px;"><?= ucwords($this->session->userdata('name')) ?></h6>
+					<h6 style="color:white;margin-right:20px;"><?= ucwords($this->session->userdata('name')) ?></h6>
 					<a class="btn btn-danger" href="<?= base_url('logout') ?>">LogOut</a>
 				</form>
 			</div>

@@ -74,9 +74,9 @@ class Event extends CI_Controller
 				$dataForm = array(
 					'event_id'      => $eventId,
 					'label'         => $this->input->post('label')[$i],
-					'field_name'    => strtolower($this->input->post('field_name'))[$i],
+					'field_name'    => $this->input->post('field_name')[$i],
 					'field_type'    => $this->input->post('field_type')[$i],
-					'field_options' => $this->input->post('field_options')[$i],
+					'field_options' => isset($this->input->post('field_options')[$i]) ? $this->input->post('field_options')[$i] : '',
 					'required'      => $this->input->post('required')[$i],
 				);
 				$this->Commonmodel->insertData('form_nodes', $dataForm);

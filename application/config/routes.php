@@ -55,19 +55,21 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['actionLogin'] = 'auth/actionLogin';
 $route['logout'] = 'auth/logout';
-
+// admin panel
 $route['event-list'] = 'event/index';
 $route['event/add'] = 'event/add';
 $route['event/edit/(:num)'] = 'event/edit/$1';
 $route['saveEvent'] = 'event/saveEvent';
 $route['event/delete/(:num)'] = 'event/delete/$1';
 
+$route['set-approval-band'] = 'dashboard/set_approval_band';
+
 // user panel
 $route['upcoming-event'] = 'user/index';
 $route['event/registration/(:num)'] = 'user/registration/$1';
-$route['saveRegistration']='user/saveRegistration';
+$route['saveRegistration'] = 'user/saveRegistration';
 
 // Approver 
 
-$route['registration-list']='dashboard/registration_list';
-
+$route['registration-list'] = 'dashboard/registration_list';
+$route['approval'] = 'dashboard/approval';
