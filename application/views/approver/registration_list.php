@@ -59,13 +59,13 @@
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content ">
 
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">Change Status</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="modalClose()"></button>
 			</div>
 
 			<!-- Modal body -->
@@ -88,7 +88,7 @@
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Submit</button>
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="modalClose()">Close</button>
 				</div>
 			</form>
 
@@ -101,5 +101,9 @@
 		$('#myModal').show();
 		$('#registration_id').val(reg_id);
 		$('#band_id').val(band_id);
+	}
+
+	function modalClose() {
+		$('#myModal').hide();
 	}
 </script>
