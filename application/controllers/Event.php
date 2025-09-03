@@ -90,7 +90,7 @@ class Event extends CI_Controller
 			$count2 = count($this->input->post('band_role'));
 			$ap_band=$this->Commonmodel->getData('approval_bands', ['event_id' => $eventId]);
 			if(count($ap_band)>0){
-				$this->Commonmodel->deleteData2($eventId,'approval_bands', ['event_id' => $eventId]);
+				$this->Commonmodel->deleteData2($eventId,'approval_bands',  ['event_id' => $eventId]);
 			}
 			for ($i = 0; $i < $count2; $i++) {
 				$dataBand = array(
