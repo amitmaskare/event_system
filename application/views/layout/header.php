@@ -33,14 +33,16 @@ if (empty($this->session->userdata('userId'))) {
 						<li class="nav-item">
 							<a class="nav-link" href="<?= base_url('set-approval-band') ?>">Set Approver Band</a>
 						</li>
-					<?php endif; ?>
-					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
-					</li>
+					<?php else: ?>
 
-					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url('registration-list') ?>">Approver</a>
-					</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="<?= base_url('registration-list') ?>">Approver</a>
+						</li>
+					<?php endif; ?>
 
 				</ul>
 				<form class="d-flex">
