@@ -73,10 +73,10 @@
 														value="<?= $quota->max_participants ?? '' ?>">
 												</td>
 												<td>
-													<a href="javascript:void(0)" onclick="appendCurrentCell(1);"
+													<a href="javascript:void(0)" onclick="appendCurrentCell(<?= $index + 1 ?>);"
 														class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
 													<a href="javascript:void(0)" class="btn btn-sm btn-danger"
-														onclick="deleteCurrentCell(1);" title="Delete Row"> Remove</a>
+														onclick="deleteCurrentCell(<?= $index + 1 ?>);" title="Delete Row"> Remove</a>
 												</td>
 											</tr>
 										<?php endforeach;
@@ -160,10 +160,10 @@
 												</td>
 
 												<td>
-													<a href="javascript:void(0)" onclick="appendForm(1);"
+													<a href="javascript:void(0)" onclick="appendForm(<?= $index + 1 ?>);"
 														class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
 													<a href="javascript:void(0)" class="btn btn-sm btn-danger"
-														onclick="deleteForm(1);" title="Delete Row"> Remove</a>
+														onclick="deleteForm(<?= $index + 1 ?>);" title="Delete Row"> Remove</a>
 												</td>
 											</tr>
 										<?php endforeach;
@@ -212,7 +212,7 @@
 									<tr>
 										<th>Band Order</th>
 										<th>Role</th>
-										<th>Action</th>
+										<th>Action</th> 
 									</tr>
 								</thead>
 								<tbody id="bandTable">
@@ -233,10 +233,10 @@
 
 													</select></td>
 												<td>
-													<a href="javascript:void(0)" onclick="appendBand(1);"
+													<a href="javascript:void(0)" onclick="appendBand(<?= $index + 1 ?>);"
 														class="btn btn-sm btn-info mr-2" title="Add Row">Add</a>
 													<a href="javascript:void(0)" class="btn btn-sm btn-danger"
-														onclick="deleteBand(1);" title="Delete Row"> Remove</a>
+														onclick="deleteBand(<?= $index + 1 ?>);" title="Delete Row"> Remove</a>
 												</td>
 											</tr>
 										<?php endforeach;

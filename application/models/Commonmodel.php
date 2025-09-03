@@ -27,4 +27,11 @@ class Commonmodel extends CI_Model
 	{
 		return $this->db->delete($table, $cond);
 	}
+
+	public function deleteData2($event_id, $table, $con)
+	{
+		$this->db->where('event_id', $event_id);
+		$this->db->delete('registrations');
+		return $this->db->delete($table, $con);
+	}
 }
