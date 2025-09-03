@@ -17,7 +17,7 @@
 					</div>
 					<?php
 					if (!empty($registration)): foreach ($registration as $reg):
-							$required = $reg->required == '1' ? '' : '';
+							$required = $reg->required == '1' ? 'required' : '';
 							$option = explode(',', $reg->field_options);
 							$field_name = "field_" . $reg->id;
 					?>
@@ -44,7 +44,8 @@
 					<input type="hidden" name="event_id" value="<?= !empty($getEvent->id) ? $getEvent->id : '' ?>">
 
 					<div class="col-lg-12 col-sm-12 col-12 w-50 mb-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-primary col-12 me-3" onclick="return validation()">Submit</button>
+						<button type="submit" class="btn btn-primary col-12 me-3"
+							onclick="return validation()">Submit</button>
 						<a href="<?= base_url('upcoming-event') ?>" class="btn btn-secondary col-12">Cancel</a>
 					</div>
 
