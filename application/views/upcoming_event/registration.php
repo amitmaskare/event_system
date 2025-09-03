@@ -5,7 +5,7 @@
 
 		<div class="container py-3  d-flex align-items-center justify-content-center ">
 			<form action="<?= base_url('saveRegistration') ?>" class=" col-lg-6 col-sm-6 col-12" method="POST"
-				id="dynamicForm" enctype="multipart/form-data" autocomplete="off" onsubmit="return validation()">
+				id="dynamicForm" enctype="multipart/form-data" autocomplete="off">
 				<div class="row  shadow-lg p-3 mb-5 bg-body rounded ">
 					<h2 class="text-center">Event Registration</h2>
 
@@ -61,13 +61,9 @@
 	function validation() {
 		let valid = true;
 		let firstError = null;
-
-		// Loop through inputs and selects inside the form
 		$("#dynamicForm").find("input, select").each(function() {
 			let $field = $(this);
 			let value = $.trim($field.val());
-
-			// Check required
 			if ($field.prop("required") && value === "") {
 				valid = false;
 				$field.addClass("is-invalid");
@@ -76,7 +72,6 @@
 				$field.removeClass("is-invalid");
 			}
 
-			// Email check
 			if ($field.attr("type") === "email" && value !== "") {
 				let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailPattern.test(value)) {
