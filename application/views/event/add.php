@@ -147,7 +147,7 @@
 												<td id="optionField<?= $index + 1 ?>">
 													<?php if ($row->field_type == 'dropdown'): ?>
 														<input type="text" class="form-control"
-															name="field_options[]" value="<?= $row->field_options ?? '' ?>" required>
+															name="field_options[<?= $index + 1 ?>]" value="<?= $row->field_options ?? '' ?>" required>
 													<?php endif; ?>
 												</td>
 												<td>

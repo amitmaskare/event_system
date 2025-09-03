@@ -70,13 +70,17 @@ class Event extends CI_Controller
 		}
 		if ($this->input->post('label')) {
 			$count1 = count($this->input->post('label'));
+			
 			for ($i = 0; $i < $count1; $i++) {
+				 $fieldType = $this->input->post('field_type')[$i];
 				$dataForm = array(
 					'event_id'      => $eventId,
 					'label'         => $this->input->post('label')[$i],
 					'field_name'    => $this->input->post('field_name')[$i],
-					'field_type'    => $this->input->post('field_type')[$i],
-					'field_options' => isset($this->input->post('field_options')[$i]) ? $this->input->post('field_options')[$i] : '',
+					'field_type'    => $fieldType,
+					 'field_options' => ($fieldType == 'dropdown' && !empty($this->input->post('field_options')[$i+1])) 
+                                ? $this->input->post('field_options')[$i+1] 
+                                : '', 
 					'required'      => $this->input->post('required')[$i],
 				);
 				$this->Commonmodel->insertData('form_nodes', $dataForm);

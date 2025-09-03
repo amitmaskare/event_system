@@ -117,7 +117,7 @@ function deleteBand(rowId) {
 
 function showOption(val, i) {
 	if (val == "dropdown") {
-		var optionField = `<input type="text" class="form-control" name="field_options[]" required>`;
+		var optionField = `<input type="text" class="form-control" name="field_options[${i}]" required>`;
 		$("#optionField" + i).html(optionField);
 	} else {
 		$("#optionField" + i).html("");
