@@ -24,6 +24,7 @@ class Dashboard extends CI_Controller
 
 	public function approval()
 	{
+
 		$data = array(
 			'registration_id' => $this->input->post('registration_id'),
 			'approved_by' => $this->session->userdata('userId'),

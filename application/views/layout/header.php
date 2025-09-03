@@ -2,7 +2,7 @@
 if (empty($this->session->userdata('userId'))) {
 	redirect('');
 }
-
+$role = $this->session->userdata('role');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,12 +33,13 @@ if (empty($this->session->userdata('userId'))) {
 						<li class="nav-item">
 							<a class="nav-link" href="<?= base_url('set-approval-band') ?>">Set Approver Band</a>
 						</li>
-					<?php else: ?>
-
+					<?php endif; ?>
+					<?php if (in_array($role, ['employee', 'manager', 'director', 'external'])): ?>
 						<li class="nav-item">
 							<a class="nav-link" href="<?= base_url('upcoming-event') ?>">Upcoming Event</a>
 						</li>
-
+					<?php endif; ?>
+					<?php if (in_array($role, ['manager', 'director'])): ?>
 						<li class="nav-item">
 							<a class="nav-link" href="<?= base_url('registration-list') ?>">Approver</a>
 						</li>
